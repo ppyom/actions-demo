@@ -12,7 +12,7 @@ describe("App component", () => {
     const logoElement = screen.getByAltText(/logo/i);
     expect(logoElement).toBeInTheDocument();
   });
-  test("has correct link attributess", () => {
+  test("has correct link attributesss", () => {
     render(<App />);
     const link = screen.getByText(/learn react/i);
     expect(link).toHaveAttribute("href", "https://reactjs.org");
