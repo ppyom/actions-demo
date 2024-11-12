@@ -1,0 +1,40 @@
+ # 테스트 코드를 푸시 할 때마다 통과되는지 확인할 워크플로우
+name: Unit Test & Lighthouse CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs: 
+  test: # Job 이름
+    runs-on: ubuntu-latest # 실행 환경
+
+    steps:
+    - name: checkout code
+      uses : actions/checkout@v4
+
+    - name: Setup Node.js # Step 이름
+      uses: actions/setup-node@v4 # 라이브러리 이름
+      with:  # 라이브러리 정보
+        node-version: '20.x'
+        registry-url: 'https://registry.npmjs.org'
+        
+    - name: Configure npm registry
+      run: |
+        echo "Configuring npm to use public registry"
+        npm config set registry https://registry.npmjs.org/
+
+    - name: Clear npm cache
+      run: npm cache clean --force
+
+    - name: Remove package-lock.json
+      run: rm -f package-lock.json
+
+    - name: Install dependencies
+      run: npm install --registry=https://registry.npmjs.org/
+      env:
+        NODE_AUTH_TOKEN: ''
+
+    - name: Run tests
+      run: npm test
