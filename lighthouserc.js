@@ -3,7 +3,7 @@ module.exports = {
     collect: {
       staticDistDir: "./build",
       url: ["http://localhost:3000"],
-      numberOfRuns: 2,
+      numberOfRuns: 3,
     },
     assert: {
       assertions: {
