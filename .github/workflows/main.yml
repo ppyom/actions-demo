@@ -107,12 +107,11 @@ jobs:
             const score = (res) => (res >= 90 ? "🟢" : res >= 50 ? "🟠" : "🔴");
 
             const comment = [
-              `⚡ Lighthouse report!`,
               `| Category | Score |`,
               `| --- | --- |`,
               `| ${score(summary.performance)} Performance | ${summary.performance} |`,
               // ... 나머지 카테고리들
-            ].join("\n");
+            ].join("\n\n");
 
             const detail = [
               `| Category | Score |`,
@@ -123,10 +122,10 @@ jobs:
                 audits["first-contentful-paint"].displayValue
               } |`,
               // ... 나머지 상세 정보들
-            ].join("\n");
+            ].join("\n\n");
             comments += comment + "\n" + detail + "\n";
           });
-          core.setOutput('comments', comments)
+          core.setOutput('comments', `⚡ Lighthouse report!\n${comments}`)
 
     - name: comment PR
       if: github.event_name == 'pull_request'
